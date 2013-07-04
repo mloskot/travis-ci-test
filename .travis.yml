@@ -8,6 +8,7 @@ env:
         - FEATURE=2
         - FEATURE=3
 script:
+    - echo "FEATURE=$FEATURE"
     - make check
 after_script:
     - echo "TRAVIS_TEST_RESULT=${TRAVIS_TEST_RESULT}"

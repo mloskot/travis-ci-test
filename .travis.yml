@@ -1,5 +1,8 @@
 language: cpp
 compiler:
-  - gcc
-  - clang
-script: make check
+    - gcc
+    - clang
+script:
+    - make check
+after_script:
+    - echo "TRAVIS_TEST_RESULT=${TRAVIS_TEST_RESULT}"

@@ -1,7 +1,7 @@
 #!/bin/bash -e
 
 # make a command fail
-if $FEATURE -gt 2; then
+if [ $FEATURE -gt 2 ]; then
     echo "FEATURE -gt 2"
     non-existent-cmd
     echo "[log] non-existent-cmd exit $?"

@@ -9,6 +9,7 @@ env:
         - FEATURE=3
 script:
     - echo "FEATURE=$FEATURE"
+    - ./script.sh
 
 after_script:
     - echo "FEATURE=$FEATURE"

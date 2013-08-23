@@ -1,8 +1,10 @@
 language: cpp
 compiler:
     - gcc
-    - clang
+      #- clang
 env:
+    - CXXFLAGS=-m32
+    - CXXFLAGS=-m64
     matrix:
         - FEATURE=1
         - FEATURE=2

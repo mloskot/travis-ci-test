@@ -4,7 +4,7 @@ cmake \
     -DCMAKE_BUILD_TYPE=Debug \
     ..
 make
+pwd
 ls
-ls src
-file src/test2
-ldd src/test2
+file test2
+ldd test2

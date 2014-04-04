@@ -1,16 +1,18 @@
 language: cpp
 compiler:
     - gcc
-      #- clang
+    #- clang
 env:
     - FEATURE=1 CXXFLAGS=-m32
     - FEATURE=1 CXXFLAGS=-m64
     - FEATURE=2
+    - FEATURE=2 CC=i586-mingw32msvc-gcc CXX=i586-mingw32msvc-g++ LD=i586-mingw32msvc-ld
     - FEATURE=3
 
 before_install:
     - sudo apt-get update -qq
     - sudo apt-get install -qq g++-multilib
+    - sudo apt-get install -qq mingw32 
 
 script:
     - echo "FEATURE=$FEATURE"

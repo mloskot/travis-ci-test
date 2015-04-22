@@ -5,10 +5,8 @@ compiler:
 env:
     - FEATURE=1 CXXFLAGS=-m32
     - FEATURE=1 CXXFLAGS=-m64
-    - FEATURE=2
     - FEATURE=2 CC=i586-mingw32msvc-gcc CXX=i586-mingw32msvc-g++ LD=i586-mingw32msvc-ld
-    - FEATURE=3
-    - SOCI_TRAVIS_BACKEND=oracle
+    - FEATURE=3 SOCI_TRAVIS_BACKEND=oracle
 
 before_install:
     - ./bin/ci/before_install.sh

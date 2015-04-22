@@ -17,8 +17,7 @@ before_script:
     - ./bin/ci/before_script.sh
 
 script:
-    - echo "FEATURE=$FEATURE"
     - ./bin/ci/script.sh
 
 after_script:
-    - echo "FEATURE=$FEATURE"
+    - echo "Finished"

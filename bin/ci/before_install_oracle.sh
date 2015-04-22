@@ -1,5 +1,5 @@
 #!/bin/bash -e
-# Script performs non-interactive instllation of Oracle XE 10g on Debian
+# Script performs non-interactive installation of Oracle XE 10g on Debian
 #
 # Based on oracle10g-update.sh from HTSQL project:
 # https://bitbucket.org/prometheus/htsql

@@ -7,6 +7,8 @@
 # for some reason the file is not found any more here => creating user in install scirpt
 # Load Oracle environment variables so that we could run `sqlplus`.
 . /usr/lib/oracle/xe/app/oracle/product/10.2.0/server/bin/oracle_env.sh
+echo "ORACLE_HOME=${ORACLE_HOME}"
+echo "ORACLE_SID=${ORACLE_SID}"
 
 # create user for testing
 echo "CREATE USER travis IDENTIFIED BY travis;" | \

@@ -8,15 +8,17 @@ env:
     - FEATURE=2
     - FEATURE=2 CC=i586-mingw32msvc-gcc CXX=i586-mingw32msvc-g++ LD=i586-mingw32msvc-ld
     - FEATURE=3
+    - SOCI_TRAVIS_BACKEND=oracle
 
 before_install:
-    - sudo apt-get update -qq
-    - sudo apt-get install -qq g++-multilib
-    - sudo apt-get install -qq mingw32 
+    - ./bin/ci/before_install.sh
+
+before_script:
+    - ./bin/ci/before_script.sh
 
 script:
     - echo "FEATURE=$FEATURE"
-    - ./script.sh
+    - ./bin/ci/script.sh
 
 after_script:
     - echo "FEATURE=$FEATURE"

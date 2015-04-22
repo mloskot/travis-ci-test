@@ -110,13 +110,9 @@ sqlplus -S -L sys/admin AS SYSDBA
 sudo /etc/init.d/oracle-xe restart
 
 # Set Oracle environment variables on login.
-sudo cat <<END >>/root/.bashrc
-
-. /usr/lib/oracle/xe/app/oracle/product/10.2.0/server/bin/oracle_env.sh
-END
+# NOTE, mloskot: On Travis CI, fails with Permission denied 
+#sudo cat <<END >>/root/.bashrc
+#. /usr/lib/oracle/xe/app/oracle/product/10.2.0/server/bin/oracle_env.sh
+#END
 
 free_restore
-
-# no more needed - stored in the cloudbees mvn repo
-# need to install jdbc to local repo
-#mvn install:install-file -Dfile=/vagrant/script/travis/ojdbc6.jar -DgroupId=com.oracle -DartifactId=ojdbc6 -Dversion=11.2.0.4 -Dpackaging=jar -DgeneratePom=true

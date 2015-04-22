@@ -8,4 +8,6 @@ sudo apt-fast install -qq -y g++-multilib mingw32
 sudo apt-fast update -qq -y
 
 before_install="${TRAVIS_BUILD_DIR}/bin/ci/before_install_${SOCI_TRAVIS_BACKEND}.sh"
-[ -x ${before_install} ] && ${before_install}
+if [ -x ${before_install} ]; then
+	${before_install}
+fi

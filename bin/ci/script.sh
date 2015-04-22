@@ -6,5 +6,6 @@ cd ${builddir}
 echo $PWD
 $TRAVIS_BUILD_DIR/bin/ci/build.sh
 
-script="${TRAVIS_BUILD_DIR}/bin/ci/script_${SOCI_TRAVIS_BACKEND}.sh"
-[ -x ${script} ] && ${script}
+if [ -x ${script} ]; then
+	${script}
+fi

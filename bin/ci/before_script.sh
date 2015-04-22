@@ -6,4 +6,6 @@
 source ${TRAVIS_BUILD_DIR}/bin/ci/common.sh
 
 before_script="${TRAVIS_BUILD_DIR}/bin/ci/before_script_${SOCI_TRAVIS_BACKEND}.sh"
-[ -x ${before_script} ] && ${before_script}
+if [ -x ${before_script} ]; then
+	${before_script}
+fi

@@ -1,7 +1,7 @@
 language: cpp
 compiler:
     - gcc
-    #- clang
+    - clang
 env:
     - FEATURE=1 CXXFLAGS=-m32
     - FEATURE=1 CXXFLAGS=-m64

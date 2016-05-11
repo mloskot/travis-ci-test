@@ -1,21 +1,26 @@
 language: cpp
-compiler:
-    - gcc
-    - clang
-env:
-    - FEATURE=1 CXXFLAGS=-m32
-    - FEATURE=1 CXXFLAGS=-m64
-    - FEATURE=2 CC=i586-mingw32msvc-gcc CXX=i586-mingw32msvc-g++ LD=i586-mingw32msvc-ld
-    - FEATURE=3 SOCI_TRAVIS_BACKEND=oracle
 
 before_install:
-    - ./bin/ci/before_install.sh
+  - ./bin/ci/before_install.sh
 
 before_script:
-    - ./bin/ci/before_script.sh
+  - ./bin/ci/before_script.sh
 
 script:
-    - ./bin/ci/script.sh
+  - ./bin/ci/script.sh
 
 after_script:
-    - echo "Finished"
+  - echo "Finished"
+
+matrix:
+  include:
+    - FEATURE=1 CXXFLAGS=-m32
+      compiler: gcc
+      addons:
+        mariadb: "10.0"
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packges:
+            - g++-5
+            - libboost-locale1.55-dev

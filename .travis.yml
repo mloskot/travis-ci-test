@@ -16,10 +16,15 @@ matrix:
   include:
     - env: FEATURE=1 CXXFLAGS=-m32
       compiler: gcc
-      addons:
+      addons: &gcc5
         apt:
           sources:
             - ubuntu-toolchain-r-test
           packages:
             - g++-5
             - libboost-locale1.55-dev
+    - env: FEATURE=1 CXXFLAGS=-m64
+      compiler: gcc
+      addons: &gcc5
+    - env: FEATURE=2 CC=i586-mingw32msvc-gcc CXX=i586-mingw32msvc-g++ LD=i586-mingw32msvc-ld
+    - env: FEATURE=3 SOCI_TRAVIS_BACKEND=oracle

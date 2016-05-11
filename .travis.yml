@@ -14,7 +14,7 @@ after_script:
 
 matrix:
   include:
-    - FEATURE=1 CXXFLAGS=-m32
+    - env: FEATURE=1 CXXFLAGS=-m32
       compiler: gcc
       addons:
         mariadb: "10.0"

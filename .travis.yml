@@ -20,6 +20,6 @@ matrix:
         apt:
           sources:
             - ubuntu-toolchain-r-test
-          packges:
+          packages:
             - g++-5
             - libboost-locale1.55-dev

@@ -27,7 +27,7 @@ before_build:
 
 build:
   parallel: true
-  project: nanodbc.sln
+  project: ci-test.sln
   verbosity: minimal
 
 # If you need to debug AppVeyor session (https://www.appveyor.com/docs/how-to/rdp-to-build-worker), then:

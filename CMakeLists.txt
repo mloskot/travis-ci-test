@@ -1,4 +1,4 @@
 cmake_minimum_required (VERSION 2.8)
-project(travis-ci-test)
+project(ci-test)
 add_subdirectory(src)
 

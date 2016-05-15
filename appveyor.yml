@@ -28,7 +28,7 @@ before_build:
 build:
   parallel: true
   project: ci-test.sln
-  verbosity: minimal
+  verbosity: normal
 
 # If you need to debug AppVeyor session (https://www.appveyor.com/docs/how-to/rdp-to-build-worker), then:
 # 1. Uncomment the on_finish section below:

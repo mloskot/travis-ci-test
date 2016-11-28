@@ -6,5 +6,6 @@ if (MSVC)
   message(STATUS "CMAKE_CXX_FLAGS=${CMAKE_CXX_FLAGS}")
 endif()
 
+add_executable(test test.cpp)
 add_subdirectory(src)
 

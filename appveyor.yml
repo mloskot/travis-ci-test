@@ -21,22 +21,26 @@ init:
 
 install:
   - ps: 'Write-Host "Installing SQLite ODBC Driver:" -ForegroundColor Magenta'
-  - cmd: appveyor DownloadFile "http://download-codeplex.sec.s-msft.com/Download/Release?ProjectName=jxrlib&DownloadId=685249&FileTime=130142428055530000&Build=21050" -FileName jxrlib_1_1.zip
-  - cmd: 7z x jxrlib_1_1.zip -oC:\jxrlib_1_1 > nul
-  - cmd: pushd C:\jxrlib_1_1\jxrlib\jxrencoderdecoder
-  - cmd: if "%platform%" == "x86" msbuild /p:Configuration=Release /p:Platform=Win32 JXR_vc11.sln
-  - cmd: if "%platform%" == "x64" msbuild /p:Configuration=Release /p:Platform=x64 JXR_vc11.sln
-  - cmd: popd
 
 before_build:
-  - ps: 'Write-Host "Running CMake:" -ForegroundColor Magenta'
-  - cmake.exe -G "Visual Studio 14 2015 Win64" %APPVEYOR_BUILD_FOLDER%
-  - ps: 'Write-Host "Running MSBuild:" -ForegroundColor Magenta'
+  - ps: 'Write-Host "Building jxrlib:" -ForegroundColor Magenta'
+  - cmd: appveyor DownloadFile "http://download-codeplex.sec.s-msft.com/Download/Release?ProjectName=jxrlib&DownloadId=685249&FileTime=130142428055530000&Build=21050" -FileName jxrlib_1_1.zip
+  - cmd: 7z x jxrlib_1_1.zip -oC:\jxrlib_1_1 > nul
+  - cmd: cd C:\jxrlib_1_1\jxrlib\jxrencoderdecoder
+  - cmd: if "%platform%" == "x86" msbuild /p:Configuration=Release /p:Platform=Win32 JXR_vc11.sln
+  - cmd: if "%platform%" == "x64" msbuild /p:Configuration=Release /p:Platform=x64 JXR_vc11.sln
+  - cmd: cd %APPVEYOR_BUILD_FOLDER%
 
 build:
-  parallel: true
-  project: ci-test.sln
-  verbosity: normal
+  - ps: 'Write-Host "Building ci-test:" -ForegroundColor Magenta'
+  - cmd: mkdir build
+  - cmd: cd build
+  - ps: 'Write-Host "Running CMake:" -ForegroundColor Magenta'
+  - cmd: if "%platform%" == "x86" cmake.exe -G "Visual Studio 14 2015" %APPVEYOR_BUILD_FOLDER%
+  - cmd: if "%platform%" == "x64" cmake.exe -G "Visual Studio 14 2015 Win64" %APPVEYOR_BUILD_FOLDER%
+  - ps: 'Write-Host "Running MSBuild:" -ForegroundColor Magenta'
+  - cmd: if "%platform%" == "x86" msbuild /p:Configuration=Release /p:Platform=Win32 ci-test.sln
+  - cmd: if "%platform%" == "x64" msbuild /p:Configuration=Release /p:Platform=x64 ci-test.sln
 
 # If you need to debug AppVeyor session (https://www.appveyor.com/docs/how-to/rdp-to-build-worker), then:
 # 1. Uncomment the on_finish section below:

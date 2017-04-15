@@ -26,7 +26,7 @@ install:
   - cmd: pushd C:\jxrlib_1_1\jxrlib\jxrencoderdecoder
   - cmd: if "%platform%" == "x86" msbuild /p:Configuration=Release /p:Platform=Win32 JXR_vc11.sln
   - cmd: if "%platform%" == "x64" msbuild /p:Configuration=Release /p:Platform=x64 JXR_vc11.sln
-  - cmd: tree -f
+  - cmd: tree /f
   - cmd: popd
 
 before_build:

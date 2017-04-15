@@ -21,10 +21,10 @@ init:
 
 install:
   - ps: 'Write-Host "Installing SQLite ODBC Driver:" -ForegroundColor Magenta'
-  - cmd: appveyor DownloadFile http://jxrlib.codeplex.com/downloads/get/685249
-  - cmd: 7z x jxrlib_1_1.zip -oC:\jxrlib_1_1 > nul
+  - cmd: appveyor DownloadFile http://jxrlib.codeplex.com/downloads/get/685249 -FileName jxrlib_1_1.zip
   - cmd: echo %CD%
   - cmd: dir .
+  - cmd: 7z x jxrlib_1_1.zip -oC:\jxrlib_1_1 > nul
   - cmd: cd C:\jxrlib_1_1\jxrlib\jxrencoderdecoder
   - cmd: if "%platform%" == "x86" msbuild /p:Configuration=Release /p:Platform=Win32
   - cmd: if "%platform%" == "x64" msbuild /p:Configuration=Release /p:Platform=x64

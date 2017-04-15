@@ -31,7 +31,9 @@ before_build:
   - cmd: if "%platform%" == "x64" msbuild /p:Configuration=Release /p:Platform=x64 JXR_vc11.sln
   - cmd: cd %APPVEYOR_BUILD_FOLDER%
 
-build:
+build: off
+
+build_script:
   - ps: 'Write-Host "Building ci-test:" -ForegroundColor Magenta'
   - cmd: mkdir build
   - cmd: cd build

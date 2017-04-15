@@ -24,8 +24,8 @@ install:
   - cmd: appveyor DownloadFile "http://download-codeplex.sec.s-msft.com/Download/Release?ProjectName=jxrlib&DownloadId=685249&FileTime=130142428055530000&Build=21050" -FileName jxrlib_1_1.zip
   - cmd: 7z x jxrlib_1_1.zip -oC:\jxrlib_1_1 > nul
   - cmd: cd C:\jxrlib_1_1\jxrlib\jxrencoderdecoder
-  - cmd: if "%platform%" == "x86" msbuild /p:Configuration=Release /p:Platform=Win32
-  - cmd: if "%platform%" == "x64" msbuild /p:Configuration=Release /p:Platform=x64
+  - cmd: if "%platform%" == "x86" msbuild /p:Configuration=Release /p:Platform=Win32 JXR_vc11.sln
+  - cmd: if "%platform%" == "x64" msbuild /p:Configuration=Release /p:Platform=x64 JXR_vc11.sln
 
 before_build:
   - ps: 'Write-Host "Running CMake:" -ForegroundColor Magenta'

@@ -5,6 +5,9 @@ jobs:
     docker:
       - image: gcc:latest
     steps:
+      - run:
+          name: Install dependencies ci-test
+          command: apt-get update && apt-get install -y cmake
       - checkout
       - run:
           name: Configure ci-test

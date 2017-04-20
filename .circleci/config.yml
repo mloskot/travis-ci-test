@@ -20,4 +20,4 @@ jobs:
           command: pwd && cd build && cmake --build .
       - run:
           name: Test ci-test
-          command: pwd && cd build && find && file test && ldd test && ./test && file test2 && ldd test2
+          command: pwd && cd build && find && ldd ./test1 && ./test1 && ldd ./src/test2

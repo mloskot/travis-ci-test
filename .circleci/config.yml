@@ -1,0 +1,17 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/ci-test
+    docker:
+      - image: gcc:latest
+    steps:
+      - checkout
+      - run:
+          name: Configure ci-test
+          command: mkdir -p build && cd build && cmake .. -DCMAKE_BUILD_TYPE=Debug
+      - run:
+          name: Build ci-test
+          command: echo "Building"
+      - run:
+          name: Test ci-test
+          command: echo "Building"

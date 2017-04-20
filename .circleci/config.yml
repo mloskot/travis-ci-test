@@ -11,10 +11,10 @@ jobs:
       - checkout
       - run:
           name: Configure ci-test
-          command: mkdir -p build && cd build && cmake .. -DCMAKE_BUILD_TYPE=Debug
+          command: pwd && mkdir -p build && cd build && cmake ..
       - run:
           name: Build ci-test
-          command: cmake --build . --config Debug
+          command: pwd && cmake --build .
       - run:
           name: Test ci-test
           command: pwd && find && file test && ldd test && ./test && file test2 && ldd test2

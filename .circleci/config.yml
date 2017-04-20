@@ -14,7 +14,7 @@ jobs:
           command: mkdir -p build && cd build && cmake .. -DCMAKE_BUILD_TYPE=Debug
       - run:
           name: Build ci-test
-          command: make
+          command: cmake --build . --config Debug
       - run:
           name: Test ci-test
           command: pwd && find && file test && ldd test && ./test && file test2 && ldd test2

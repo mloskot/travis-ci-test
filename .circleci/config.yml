@@ -10,11 +10,14 @@ jobs:
           command: apt-get update && apt-get install -y cmake
       - checkout
       - run:
+          name: Prepare ci-test
+          command: pwd && mkdir -p build
+      - run:
           name: Configure ci-test
-          command: pwd && mkdir -p build && cd build && cmake ..
+          command: pwd && cd build && cmake ..
       - run:
           name: Build ci-test
-          command: pwd && cmake --build .
+          command: pwd && cd build && cmake --build .
       - run:
           name: Test ci-test
-          command: pwd && find && file test && ldd test && ./test && file test2 && ldd test2
+          command: pwd && cd build && find && file test && ldd test && ./test && file test2 && ldd test2

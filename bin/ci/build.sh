@@ -6,8 +6,9 @@ cmake \
 make
 pwd
 ls
-file test
-ldd test
-./test
+file test1
+ldd test1
+./test1
 file test2
 ldd test2
+#./test2

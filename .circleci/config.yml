@@ -17,4 +17,4 @@ jobs:
           command: make
       - run:
           name: Test ci-test
-          command: pwd && ls && file test && ldd test && ./test && file test2 && ldd test2
+          command: pwd && find && file test && ldd test && ./test && file test2 && ldd test2

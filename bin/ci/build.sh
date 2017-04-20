@@ -5,7 +5,7 @@ cmake \
     ..
 make
 pwd
-ls
+find
 file test1
 ldd test1
 ./test1

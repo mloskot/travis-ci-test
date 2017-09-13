@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 2.8)
+cmake_minimum_required (VERSION 3.0.0)
 project(ci-test)
 
 if (MSVC)
@@ -6,6 +6,6 @@ if (MSVC)
   message(STATUS "CMAKE_CXX_FLAGS=${CMAKE_CXX_FLAGS}")
 endif()
 
-add_executable(test test.cpp)
+add_executable(test_exe test.cpp)
 add_subdirectory(src)
 

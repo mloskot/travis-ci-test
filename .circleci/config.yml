@@ -1,0 +1,23 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/ci-test
+    docker:
+      - image: gcc:latest
+    steps:
+      - run:
+          name: Install dependencies ci-test
+          command: apt-get update && apt-get install -y cmake
+      - checkout
+      - run:
+          name: Prepare ci-test
+          command: pwd && mkdir -p build
+      - run:
+          name: Configure ci-test
+          command: pwd && cd build && cmake ..
+      - run:
+          name: Build ci-test
+          command: pwd && cd build && cmake --build .
+      - run:
+          name: Test ci-test
+          command: pwd && cd build && find && ldd ./test1 && ./test1 && ldd ./src/test2

@@ -1,33 +1,24 @@
+os:
+  - linux
+  #- windows
+
 language: cpp
 
+ref:
+  sources: &sources
+- ubuntu-toolchain-r-test
+
 before_install:
-  - ./bin/ci/before_install.sh
+  - which cmake
+  - cmake --version
+  - g++ --version
 
 before_script:
-  - ./bin/ci/before_script.sh
+  - mkdir -p ${TRAVIS_BUILD_DIR}/_build
 
 script:
-  - ./bin/ci/script.sh
-
-after_script:
-  - echo "Finished"
-
-matrix:
-  include:
-    - env: FEATURE=1 CXXFLAGS=-m32
-      compiler: gcc
-      addons: &gcc5
-        apt:
-          sources:
-            - ubuntu-toolchain-r-test
-          packages:
-            - g++-5
-    - env: FEATURE=1 CXXFLAGS=-m32
-      compiler: clang
-    - env: FEATURE=1 CXXFLAGS=-m64
-      compiler: gcc
-      addons: &gcc5
-    - env: FEATURE=2 CC=i586-mingw32msvc-gcc CXX=i586-mingw32msvc-g++ LD=i586-mingw32msvc-ld
-      compiler: gcc
-    #- env: FEATURE=3 SOCI_TRAVIS_BACKEND=oracle
-    #  compiler: gcc
+  - cd ${TRAVIS_BUILD_DIR}/_build
+  - mkdir -p ${TRAVIS_BUILD_DIR}/_install
+  - cmake -DCMAKE_INSTALL_PREFIX=${TRAVIS_BUILD_DIR}/_install ${TRAVIS_BUILD_DIR}
+  - cmake --build .
+  - ctest --output-on-failure

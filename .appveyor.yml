@@ -1,12 +1,12 @@
 version: 1.0.{build}
 
-os: Visual Studio 2017
+image:
+  - Visual Studio 2017
+  - Ubuntu
 
 platform:
-- x64
-- x86
-
-configuration: Release
+  - x64
+  - x86
 
 shallow_clone: true
 clone_depth: 1
@@ -19,25 +19,25 @@ init:
       Write-Host "Build worker environment variables:" -ForegroundColor Magenta
       Get-ChildItem Env: | %{"{0}={1}" -f $_.Name,$_.Value}
 
+install:
+  - cmd: appveyor-retry appveyor DownloadFile https://cmake.org/files/v3.12/cmake-3.12.3-win64-x64.zip
+  - cmd: 7z x cmake-3.12.3-win64-x64.zip -oC:\cmake > nul
+  - cmd: set PATH=C:\cmake\bin;%PATH%
+  - sh: wget -O cmake-linux.sh https://cmake.org/files/v3.12/cmake-3.12.3-Linux-x86_64.sh
+  - sh: sudo sh cmake-linux.sh -- --skip-license --prefix=/usr/local
+  - sh: export PATH=/usr/local/bin:$PATH
+  - cmake --version
+
 build: off
 
 before_build:
-  - cmd: cmake --version
+  - ps: 'Write-Host "Building ci-test:" -ForegroundColor Magenta'
+  - mkdir _build
+  - cd _build
 
 build_script:
-  - ps: 'Write-Host "Building ci-test:" -ForegroundColor Magenta'
-  - cmd: mkdir _build
-  - cmd: cd _build
-  - ps: 'Write-Host "Running CMake:" -ForegroundColor Magenta'
-  - cmd: if "%platform%" == "x86" cmake.exe -G "Visual Studio 15 2017" %APPVEYOR_BUILD_FOLDER%
-  - cmd: if "%platform%" == "x64" cmake.exe -G "Visual Studio 15 2017 Win64" %APPVEYOR_BUILD_FOLDER%
-  - ps: 'Write-Host "Running MSBuild:" -ForegroundColor Magenta'
-  - cmd: if "%platform%" == "x86" msbuild /p:Configuration=Release /p:Platform=Win32 ci-test.sln
-  - cmd: if "%platform%" == "x64" msbuild /p:Configuration=Release /p:Platform=x64 ci-test.sln
-
-# If you need to debug AppVeyor session (https://www.appveyor.com/docs/how-to/rdp-to-build-worker), then:
-# 1. Uncomment the on_finish section below:
-#on_finish:
-#  - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
-# 2. Add this line to the init section below
-#- ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+  - ps: 'Write-Host "Configuring:" -ForegroundColor Magenta'
+  - cmake %APPVEYOR_BUILD_FOLDER%
+  - ps: 'Write-Host "Building:" -ForegroundColor Magenta'
+  - cmake --build .
+  - ctest --output-on-failure

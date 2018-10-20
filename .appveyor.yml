@@ -37,7 +37,7 @@ before_build:
 
 build_script:
   - ps: 'Write-Host "Configuring:" -ForegroundColor Magenta'
-  - cmake %APPVEYOR_BUILD_FOLDER%
+  - ps: cmake $env:APPVEYOR_BUILD_FOLDER
   - ps: 'Write-Host "Building:" -ForegroundColor Magenta'
   - cmake --build .
   - ctest --output-on-failure

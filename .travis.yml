@@ -6,7 +6,7 @@ language: cpp
 
 ref:
   sources: &sources
-- ubuntu-toolchain-r-test
+    - ubuntu-toolchain-r-test
 
 before_install:
   - which cmake

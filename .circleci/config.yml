@@ -20,4 +20,4 @@ jobs:
           command: pwd && cd build && cmake --build .
       - run:
           name: Test ci-test
-          command: pwd && cd build && ./test
+          command: pwd && cd build && ctest --output-on-failure

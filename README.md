@@ -1,6 +1,6 @@
 # ci-test
 
-A minimal working example targetting variety of CI services
+A minimal working example targeting variety of CI services
 with a sample C++ project and CMake.
 
 ## Build Status

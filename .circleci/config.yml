@@ -1,4 +1,4 @@
-version: 2
+version: 2.0
 jobs:
   build:
     working_directory: ~/ci-test
@@ -21,3 +21,7 @@ jobs:
       - run:
           name: Test ci-test
           command: pwd && cd build && ctest --output-on-failure
+
+notify:
+  webhooks:
+    - url: https://webhooks.gitter.im/e/9538066016dc0f9b6511

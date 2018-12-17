@@ -22,6 +22,6 @@ jobs:
           name: Test ci-test
           command: pwd && cd build && ctest --output-on-failure
 
-notify:
-  webhooks:
-    - url: https://webhooks.gitter.im/e/9538066016dc0f9b6511
+# notify:
+#   webhooks:
+#     - url: https://webhooks.gitter.im/e/9538066016dc0f9b6511

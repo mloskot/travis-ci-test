@@ -4,12 +4,13 @@
 # https://docs.microsoft.com/azure/devops/pipelines/apps/c-cpp/gcc
 
 trigger:
-- master
+  - master
+  - azure-pipelines
 
 pool:
   vmImage: 'Ubuntu-16.04'
 
 steps:
-- script: |
-    make
-  displayName: 'make'
+  - script: |
+      make
+    displayName: 'make'

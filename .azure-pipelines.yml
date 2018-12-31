@@ -12,9 +12,4 @@ jobs:
         displayName: 'Check GCC version'
       - script: which cmake && cmake --version
         displayName: 'Check CMake version'
-      - script: cmake -H. -B_build
-        displayName: 'Run CMake to configure build'
-      - script: cmake --build _build
-        displayName: 'Run CMake to build'
-      - script: cd _build && ctest -V
-        displayName: 'Run CTest to test'
+      - template: .ci/azure-pipelines-cmake-steps.yml

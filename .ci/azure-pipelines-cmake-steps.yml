@@ -1,0 +1,7 @@
+steps:
+  - script: cmake -H. -B_build
+    displayName: 'Run CMake to configure build'
+  - script: cmake --build _build
+    displayName: 'Run CMake to build'
+  - script: cd _build && ctest -V
+    displayName: 'Run CTest to test'

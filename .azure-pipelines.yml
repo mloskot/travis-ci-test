@@ -10,6 +10,5 @@ jobs:
     steps:
       - script: which g++ && g++ --version
         displayName: 'Check GCC version'
-      - script: which cmake && cmake --version
-        displayName: 'Check CMake version'
+      - template: .ci/azure-pipelines/cmake-check-steps.yml
       - template: .ci/azure-pipelines-cmake-steps.yml

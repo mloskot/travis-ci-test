@@ -133,6 +133,7 @@ run_build_boost: &run_build_boost
   run:
     name: Building Boost
     command: |
+      pwd
       cd boost
       ./bootstrap.sh -with-toolset=$TOOLSET || cat ./bootstrap.log
       ./b2 headers
@@ -141,17 +142,23 @@ run_build_boost: &run_build_boost
 run_install_cmake: &run_install_cmake
   run:
     name: Install CMake
-    command: apt-get update && apt-get install -y cmake
+    command:
+      apt-get update && apt-get install -y cmake
+      cmake --version
 
 steps_build_and_test: &steps_build_and_test
   steps:
     - *attach_workspace
+    - *run_install_cmake
     - *run_compiler_version
     - *run_build_boost
-    - *run_install_cmake
     - run:
         name: Prepare build directory
-        command: pwd && mkdir -p build
+        command:
+          ls ~
+          ls ~/project
+          ls $CIRCLE_WORKING_DIRECTORY
+          pwd && ls && mkdir -p build
     - run:
         name: Run cmake
         command: pwd && cd build && cmake -DBOOST_ROOT=~/project/boost ..

@@ -129,12 +129,13 @@ run_compiler_version: &run_compiler_version
         echo TOOLSET=$TOOLSET
         $TOOLSET --version
 
-steps_install_boost: &steps_install_boost
+steps_build_boost: &steps_install_boost
   steps:
     - *attach_workspace
     - *run_compiler_version
+    - run: apt-get install -y sudo
     - run: cd boost && ./bootstrap.sh -with-toolset=$TOOLSET || cat ./bootstrap.log
-    - run: cd boost && sudo ./b2 toolset=$TOOLSET --with-filesystem install
+    - run: cd boost && ./b2 toolset=$TOOLSET --with-filesystem stage
     - persist_to_workspace:
         root: ~/project
         paths: boost
@@ -164,7 +165,7 @@ jobs:
 
   gcc82_cxx11:
     <<: *config_gcc82_cxx11
-    <<: *steps_install_boost
+    <<: *steps_build_boost
 
 ##############################################################################
 # Workflows

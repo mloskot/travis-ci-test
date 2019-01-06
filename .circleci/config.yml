@@ -134,6 +134,7 @@ run_build_boost: &run_build_boost
     name: Building Boost
     command: |
       pwd
+      ls -l
       cd boost
       ./bootstrap.sh -with-toolset=$TOOLSET || cat ./bootstrap.log
       ./b2 headers

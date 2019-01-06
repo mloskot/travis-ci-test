@@ -154,7 +154,7 @@ steps_build_and_test: &steps_build_and_test
     - *run_build_boost
     - run:
         name: Prepare build directory
-        command:
+        command: |
           ls ~
           ls ~/project
           ls $CIRCLE_WORKING_DIRECTORY

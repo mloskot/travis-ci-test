@@ -133,9 +133,10 @@ run_build_boost: &run_build_boost
   run:
     name: Building Boost
     command: |
-      cd boost && ./bootstrap.sh -with-toolset=$TOOLSET || cat ./bootstrap.log
-      cd boost && ./b2 headers
-      cd boost && ./b2 toolset=$TOOLSET cxxstd=$CXXSTD --with-filesystem stage
+      cd boost
+      ./bootstrap.sh -with-toolset=$TOOLSET || cat ./bootstrap.log
+      ./b2 headers
+      ./b2 toolset=$TOOLSET cxxstd=$CXXSTD --with-filesystem stage
 
 steps_build_and_test: &steps_build_and_test
   steps:

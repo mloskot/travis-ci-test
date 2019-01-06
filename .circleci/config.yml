@@ -129,19 +129,19 @@ run_compiler_version: &run_compiler_version
         echo TOOLSET=$TOOLSET
         $TOOLSET --version
 
-steps_build_boost: &steps_build_boost
-  steps:
-    - *attach_workspace
-    - *run_compiler_version
-    - run: cd boost && ./bootstrap.sh -with-toolset=$TOOLSET || cat ./bootstrap.log
-    - run: cd boost && ./b2 headers
-    - run: cd boost && ./b2 toolset=$TOOLSET cxxstd=$CXXSTD --with-filesystem stage
-    - persist_to_workspace:
-        root: ~/project
-        paths: boost
+run_build_boost: &run_build_boost
+  - *attach_workspace
+  - *run_compiler_version
+  - run: cd boost && ./bootstrap.sh -with-toolset=$TOOLSET || cat ./bootstrap.log
+  - run: cd boost && ./b2 headers
+  - run: cd boost && ./b2 toolset=$TOOLSET cxxstd=$CXXSTD --with-filesystem stage
+  - persist_to_workspace:
+      root: ~/project
+      paths: boost
 
-steps_build: &steps_build
+steps_build_and_test: &steps_build_and_test
   steps:
+    - *run_build_boost
     - run:
         name: Prepare build directory
         command: pwd && mkdir -p build
@@ -184,18 +184,15 @@ jobs:
 
   gcc82_cxx11:
     <<: *config_gcc82_cxx11
-    <<: *steps_build_boost
-    <<: *steps_build
+    <<: *steps_build_and_test
 
   gcc82_cxx14:
     <<: *config_gcc82_cxx14
-    <<: *steps_build_boost
-    <<: *steps_build
+    <<: *steps_build_and_test
 
   gcc82_cxx17:
     <<: *config_gcc82_cxx17
-    <<: *steps_build_boost
-    <<: *steps_build
+    <<: *steps_build_and_test
 
 ##############################################################################
 # Workflows

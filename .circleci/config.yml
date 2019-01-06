@@ -173,8 +173,6 @@ jobs:
     <<: *config_gcc82_cxx11
     steps:
       - checkout
-          path:
-            - ci-test
       - run:
           name: Checkout Boost superproject
           command: |
@@ -188,10 +186,9 @@ jobs:
             git submodule --quiet update --init libs/filesystem
             python tools/boostdep/depinst/depinst.py filesystem
       - persist_to_workspace:
-          root: ~/project
+          root: ~/
           paths:
-            - boost
-            - ci-test
+            - project
 
   gcc82_cxx11:
     <<: *config_gcc82_cxx11

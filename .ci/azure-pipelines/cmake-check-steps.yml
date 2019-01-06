@@ -1,0 +1,3 @@
+steps:
+  - script: which cmake && cmake --version
+    displayName: 'Check CMake version'

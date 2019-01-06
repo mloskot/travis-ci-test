@@ -1,0 +1,14 @@
+trigger:
+  - master
+  - develop
+  - azure-pipelines
+
+jobs:
+  - job: Linux
+    pool:
+      vmImage: 'ubuntu-16.04'
+    steps:
+      - script: which g++ && g++ --version
+        displayName: 'Check GCC version'
+      - template: .ci/azure-pipelines/cmake-check-steps.yml
+      - template: .ci/azure-pipelines-cmake-steps.yml

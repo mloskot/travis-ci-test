@@ -138,11 +138,17 @@ run_build_boost: &run_build_boost
       ./b2 headers
       ./b2 toolset=$TOOLSET cxxstd=$CXXSTD --with-filesystem stage
 
+run_install_cmake: &run_install_cmake
+  run:
+    name: Install CMake
+    command: apt-get update && apt-get install -y cmake
+
 steps_build_and_test: &steps_build_and_test
   steps:
     - *attach_workspace
     - *run_compiler_version
     - *run_build_boost
+    - *run_install_cmake
     - run:
         name: Prepare build directory
         command: pwd && mkdir -p build
@@ -164,9 +170,6 @@ jobs:
     <<: *config_gcc82_cxx11
     steps:
       - checkout
-      - run:
-          name: Install CMake
-          command: apt-get update && apt-get install -y cmake
       - run:
           name: Checkout Boost superproject
           command: |

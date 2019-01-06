@@ -134,7 +134,8 @@ steps_build_boost: &steps_build_boost
     - *attach_workspace
     - *run_compiler_version
     - run: cd boost && ./bootstrap.sh -with-toolset=$TOOLSET || cat ./bootstrap.log
-    - run: cd boost && ./b2 toolset=$TOOLSET --with-filesystem stage
+    - run: cd boost && ./b2 headers
+    - run: cd boost && ./b2 toolset=$TOOLSET cxxstd=$CXXSTD --with-filesystem stage
     - persist_to_workspace:
         root: ~/project
         paths: boost
@@ -157,6 +158,7 @@ jobs:
             git submodule --quiet update --init tools/boostdep
             git submodule --quiet update --init libs/headers
             git submodule --quiet update --init libs/config
+            git submodule --quiet update --init libs/filesystem
             python tools/boostdep/depinst/depinst.py filesystem
       - persist_to_workspace:
           root: ~/project

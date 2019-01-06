@@ -154,11 +154,7 @@ steps_build_and_test: &steps_build_and_test
     - *run_build_boost
     - run:
         name: Prepare build directory
-        command: |
-          ls ~
-          ls ~/project
-          ls $CIRCLE_WORKING_DIRECTORY
-          pwd && ls && mkdir -p build
+        command: pwd && ls && mkdir -p build
     - run:
         name: Run cmake
         command: pwd && cd build && cmake -DBOOST_ROOT=~/project/boost ..
@@ -178,6 +174,13 @@ jobs:
     steps:
       - checkout
       - run:
+          name: List working directory
+          command: |
+            pwd
+            ls
+            cd $CIRCLE_WORKING_DIRECTORY
+            ls
+      - run:
           name: Checkout Boost superproject
           command: |
             git clone -b master --depth 1 https://github.com/boostorg/boost.git
@@ -191,7 +194,9 @@ jobs:
             python tools/boostdep/depinst/depinst.py filesystem
       - persist_to_workspace:
           root: ~/project
-          paths: boost
+          paths:
+            - boost
+            - ci-test
 
   gcc82_cxx11:
     <<: *config_gcc82_cxx11

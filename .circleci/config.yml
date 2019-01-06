@@ -124,23 +124,23 @@ run_compiler_version: &run_compiler_version
   run:
     name: Checking compiler version
     command: |
-        echo CXX=$CXX
-        echo CXXSTD=$CXXSTD
-        echo TOOLSET=$TOOLSET
-        $TOOLSET --version
+      echo CXX=$CXX
+      echo CXXSTD=$CXXSTD
+      echo TOOLSET=$TOOLSET
+      $TOOLSET --version
 
 run_build_boost: &run_build_boost
-  - *attach_workspace
-  - *run_compiler_version
-  - run: cd boost && ./bootstrap.sh -with-toolset=$TOOLSET || cat ./bootstrap.log
-  - run: cd boost && ./b2 headers
-  - run: cd boost && ./b2 toolset=$TOOLSET cxxstd=$CXXSTD --with-filesystem stage
-  - persist_to_workspace:
-      root: ~/project
-      paths: boost
+  run:
+    name: Building Boost
+    command: |
+      cd boost && ./bootstrap.sh -with-toolset=$TOOLSET || cat ./bootstrap.log
+      cd boost && ./b2 headers
+      cd boost && ./b2 toolset=$TOOLSET cxxstd=$CXXSTD --with-filesystem stage
 
 steps_build_and_test: &steps_build_and_test
   steps:
+    - *attach_workspace
+    - *run_compiler_version
     - *run_build_boost
     - run:
         name: Prepare build directory

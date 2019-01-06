@@ -167,6 +167,12 @@ jobs:
   gcc82_cxx11:
     <<: *config_gcc82_cxx11
     <<: *steps_build_boost
+  gcc82_cxx14:
+    <<: *config_gcc82_cxx14
+    <<: *steps_build_boost
+  gcc82_cxx17:
+    <<: *config_gcc82_cxx17
+    <<: *steps_build_boost
 
 ##############################################################################
 # Workflows
@@ -179,7 +185,12 @@ workflows:
       - gcc82_cxx11:
           requires:
             - bootstrap_checkout
-
+      - gcc82_cxx14:
+          requires:
+            - bootstrap_checkout
+      - gcc82_cxx17:
+          requires:
+            - bootstrap_checkout
 # notify:
 #   webhooks:
 #     - url: https://webhooks.gitter.im/e/9538066016dc0f9b6511

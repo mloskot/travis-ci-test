@@ -20,7 +20,7 @@ jobs:
           command: pwd && cd build && cmake --build .
       - run:
           name: Test ci-test
-          command: pwd && cd build && ctest --output-on-failure
+          command: pwd && cd build && ctest -V --output-on-failure
 
 # notify:
 #   webhooks:

@@ -129,7 +129,7 @@ run_compiler_version: &run_compiler_version
         echo TOOLSET=$TOOLSET
         $TOOLSET --version
 
-steps_build_boost: &steps_install_boost
+steps_build_boost: &steps_build_boost
   steps:
     - *attach_workspace
     - *run_compiler_version
@@ -175,8 +175,6 @@ workflows:
   build-and-test:
     jobs:
       - bootstrap_checkout
-
-      ### GCC 8.x ############################################################
       - gcc82_cxx11:
           requires:
             - bootstrap_checkout

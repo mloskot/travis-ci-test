@@ -1,26 +1,184 @@
+##############################################################################
+# CircleCI 2.0 for ci-test
+#
+# Copyright (c) 2018 Mateusz Loskot <mateusz@loskot.net>
+#
+# Use, modification and distribution is subject to the Boost Software License,
+# Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+# http://www.boost.org/LICENSE_1_0.txt)
+##############################################################################
 version: 2.0
+
+##############################################################################
+# Docker images
+##############################################################################
+docker_gcc48: &docker_gcc48
+  docker:
+    - image: gcc:4.8
+docker_gcc49: &docker_gcc49
+  docker:
+    - image: gcc:4.9
+
+docker_gcc51: &docker_gcc51
+  docker:
+    - image: gcc:5.1
+docker_gcc52: &docker_gcc52
+  docker:
+    - image: gcc:5.2
+docker_gcc53: &docker_gcc53
+  docker:
+    - image: gcc:5.3
+docker_gcc54: &docker_gcc54
+  docker:
+    - image: gcc:5.4
+docker_gcc55: &docker_gcc55
+  docker:
+    - image: gcc:5.5
+
+docker_gcc61: &docker_gcc61
+  docker:
+    - image: gcc:6.1
+docker_gcc62: &docker_gcc62
+  docker:
+    - image: gcc:6.2
+docker_gcc63: &docker_gcc63
+  docker:
+    - image: gcc:6.3
+docker_gcc64: &docker_gcc64
+  docker:
+    - image: gcc:6.4
+
+docker_gcc71: &docker_gcc71
+  docker:
+    - image: gcc:7.3
+docker_gcc72: &docker_gcc72
+  docker:
+    - image: gcc:7.2
+docker_gcc73: &docker_gcc73
+  docker:
+    - image: gcc:7.3
+
+docker_gcc82: &docker_gcc82
+  docker:
+    - image: gcc:8.2
+
+docker_clang39: &docker_clang39
+  docker:
+    - image: rferraro/cxx-clang:3.9
+
+docker_clang40: &docker_clang40
+  docker:
+    - image: rferraro/cxx-clang:4.0
+
+docker_clang50: &docker_clang50
+  docker:
+    - image: rferraro/cxx-clang:5.0
+
+##############################################################################
+# Build variants
+##############################################################################
+env_gcc_cxx11: &env_gcc_cxx11
+  environment:
+    - CXX: g++
+    - CXXSTD: "11"
+    - TOOLSET: gcc
+
+env_gcc_cxx14: &env_gcc_cxx14
+  environment:
+    - CXX: g++
+    - CXXSTD: "14"
+    - TOOLSET: gcc
+
+env_gcc_cxx17: &env_gcc_cxx17
+  environment:
+    - CXX: g++
+    - CXXSTD: "17"
+    - TOOLSET: gcc
+
+##############################################################################
+# Build configurations
+##############################################################################
+config_gcc82_cxx11: &config_gcc82_cxx11
+  <<: *docker_gcc82
+  <<: *env_gcc_cxx11
+
+config_gcc82_cxx14: &config_gcc82_cxx14
+  <<: *docker_gcc82
+  <<: *env_gcc_cxx14
+
+config_gcc82_cxx17: &config_gcc82_cxx17
+  <<: *docker_gcc82
+  <<: *env_gcc_cxx17
+
+##############################################################################
+# Workspace persistance
+##############################################################################
+attach_workspace: &attach_workspace
+  attach_workspace:
+    at: ~/project
+
+##############################################################################
+# Build steps (in alphabetical order by name of steps group)
+##############################################################################
+run_compiler_version: &run_compiler_version
+  run:
+    name: Checking compiler version
+    command: |
+        echo CXX=$CXX
+        echo CXXSTD=$CXXSTD
+        echo TOOLSET=$TOOLSET
+        $TOOLSET --version
+
+steps_install_boost: &steps_install_boost
+  steps:
+    - *attach_workspace
+    - *run_compiler_version
+    - run: cd boost && ./bootstrap.sh -with-toolset=$TOOLSET || cat ./bootstrap.log
+    - run: cd boost && sudo ./b2 toolset=$TOOLSET --with-filesystem install
+    - persist_to_workspace:
+        root: ~/project
+        paths: boost
+
+##############################################################################
+# Build jobs
+##############################################################################
 jobs:
-  build:
-    working_directory: ~/ci-test
-    docker:
-      - image: gcc:latest
+  booststrap_checkout:
+    <<: *config_gcc82_cxx11
     steps:
-      - run:
-          name: Install dependencies ci-test
-          command: apt-get update && apt-get install -y cmake
       - checkout
       - run:
-          name: Prepare ci-test
-          command: pwd && mkdir -p build
-      - run:
-          name: Configure ci-test
-          command: pwd && cd build && cmake ..
-      - run:
-          name: Build ci-test
-          command: pwd && cd build && cmake --build .
-      - run:
-          name: Test ci-test
-          command: pwd && cd build && ctest -V --output-on-failure
+          name: Checkout Boost superproject
+          command: |
+            git clone -b master --depth 1 https://github.com/boostorg/boost.git
+            cd boost
+            git submodule --quiet update --init tools/build
+            git submodule --quiet update --init tools/boost_install
+            git submodule --quiet update --init tools/boostdep
+            git submodule --quiet update --init libs/headers
+            git submodule --quiet update --init libs/config
+            python tools/boostdep/depinst/depinst.py filesystem
+      - persist_to_workspace:
+          root: ~/project
+          paths: boost
+
+  gcc82_cxx11:
+    <<: *config_gcc82_cxx11
+    <<: *steps_install_boost
+
+##############################################################################
+# Workflows
+##############################################################################
+workflows:
+  version: 2
+  build-and-test:
+    jobs:
+      - bootstrap_checkout
+
+      ### GCC 8.x ############################################################
+      - gcc82_cxx11:
+          requires:
+            - bootstrap_checkout
 
 # notify:
 #   webhooks:

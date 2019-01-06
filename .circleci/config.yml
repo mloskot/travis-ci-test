@@ -173,7 +173,8 @@ jobs:
     <<: *config_gcc82_cxx11
     steps:
       - checkout
-          path: ci-test
+          path:
+            - ci-test
       - run:
           name: Checkout Boost superproject
           command: |

@@ -140,6 +140,21 @@ steps_build_boost: &steps_build_boost
         root: ~/project
         paths: boost
 
+steps_build: &steps_build
+  steps:
+    - run:
+        name: Prepare build directory
+        command: pwd && mkdir -p build
+    - run:
+        name: Run cmake
+        command: pwd && cd build && cmake -DBOOST_ROOT=~/project/boost ..
+    - run:
+        name: Run cmake --build
+        command: pwd && cd build && cmake --build .
+    - run:
+        name: Run ctest
+        command: pwd && cd build && ctest -VV --output-on-failure
+
 ##############################################################################
 # Build jobs
 ##############################################################################
@@ -148,6 +163,9 @@ jobs:
     <<: *config_gcc82_cxx11
     steps:
       - checkout
+      - run:
+          name: Install CMake
+          command: apt-get update && apt-get install -y cmake
       - run:
           name: Checkout Boost superproject
           command: |
@@ -167,12 +185,17 @@ jobs:
   gcc82_cxx11:
     <<: *config_gcc82_cxx11
     <<: *steps_build_boost
+    <<: *steps_build
+
   gcc82_cxx14:
     <<: *config_gcc82_cxx14
     <<: *steps_build_boost
+    <<: *steps_build
+
   gcc82_cxx17:
     <<: *config_gcc82_cxx17
     <<: *steps_build_boost
+    <<: *steps_build
 
 ##############################################################################
 # Workflows

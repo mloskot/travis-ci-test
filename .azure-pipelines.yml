@@ -1,7 +1,5 @@
 trigger:
   - master
-  - develop
-  - azure-pipelines
 
 jobs:
   - job: Linux
@@ -10,5 +8,19 @@ jobs:
     steps:
       - script: which g++ && g++ --version
         displayName: 'Check GCC version'
-      - template: .ci/azure-pipelines/cmake-check-steps.yml
-      - template: .ci/azure-pipelines-cmake-steps.yml
+      - template: .ci/azure-pipelines/steps-check-cmake.yml
+      - template: .ci/azure-pipelines/steps-cmake.yml
+
+  - job: 'win2016_vs2017_cmake312'
+    pool:
+      vmImage: 'vs2017-win2016'
+    steps:
+      - template: .ci/azure-pipelines/steps-check-cmake.yml
+      - template: .ci/azure-pipelines/steps-cmake.yml
+
+  - job: 'macos1013_xcode91_cmake313'
+    pool:
+      vmImage: 'macOS-10.13'
+    steps:
+      - template: .ci/azure-pipelines/steps-check-cmake.yml
+      - template: .ci/azure-pipelines/steps-cmake.yml

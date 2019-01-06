@@ -173,13 +173,7 @@ jobs:
     <<: *config_gcc82_cxx11
     steps:
       - checkout
-      - run:
-          name: List working directory
-          command: |
-            pwd
-            ls
-            cd $CIRCLE_WORKING_DIRECTORY
-            ls
+          path: ci-test
       - run:
           name: Checkout Boost superproject
           command: |

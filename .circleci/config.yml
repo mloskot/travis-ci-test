@@ -147,8 +147,7 @@ run_install_cmake: &run_install_cmake
   run:
     name: Install CMake
     command: |
-      apt update
-      apt install cmake
+      apt-get update && apt-get install -y cmake
       cmake --version
 
 steps_build_and_test: &steps_build_and_test

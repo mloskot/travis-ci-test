@@ -146,7 +146,7 @@ run_build_boost: &run_build_boost
 run_install_cmake: &run_install_cmake
   run:
     name: Install CMake
-    command:
+    command: |
       apt update
       apt install cmake
       cmake --version

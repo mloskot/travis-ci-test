@@ -21,7 +21,9 @@ if ($currentVersion -ne $null) {
   }
 }
 
-$zip = ('cmake-{0}-win64-x64.zip' -f $version);
+
+$name = ('cmake-{0}-win64-x64' -f $version);
+$zip = ('{0}.zip' -f $name);
 $out = ('{0}\{1}'-f $PSScriptRoot, $zip);
 if (-not (Test-Path -Path $out -PathType Leaf)) {
   $url = ('https://cmake.org/files/v{0}.{1}/{2}' -f $major, $minor, $zip);
@@ -31,13 +33,11 @@ if (-not (Test-Path -Path $out -PathType Leaf)) {
 }
 
 try {
-  Write-Host ("Installing {0}" -f $out)
+  Write-Host ("Installing {0} in C:\{1}" -f $out, $name)
   Expand-Archive $out -DestinationPath C:\
 } catch {
   Write-Host $_.Exception.Message
   exit 1
 }
 Remove-Item -Path $out -Force
-
-$env:Path = "C:\cmake-3.13.2-win64-x64\bin;$env:Path"
-cmake --version
+C:\cmake-3.13.2-win64-x64\bin\cmake --version

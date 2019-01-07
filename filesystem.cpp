@@ -10,7 +10,7 @@
     #ifdef CI_TEST_HAS_BOOST_FILESYSTEM
         #define BOOST_FILESYSTEM_VERSION 3
         #include <boost/filesystem.hpp>
-        using fs = std::filesystem;
+        using fs = boost::filesystem;
     #endif
 #endif
 

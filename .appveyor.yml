@@ -17,7 +17,7 @@ matrix:
 init:
   - ps: |
       Write-Host "Build worker environment variables:" -ForegroundColor Magenta
-      Get-ChildItem Env: | %{"{0}={1}" -f $_.Name,$_.Value}
+      #Get-ChildItem Env: | %{"{0}={1}" -f $_.Name,$_.Value}
 
 install:
   - ps: |
@@ -25,7 +25,6 @@ install:
         ./.ci/install-cmake.ps1
       }
   - sh: sudo sh ./.ci/install-cmake.sh
-  - cmake --version
 
 build: off
 
@@ -36,7 +35,7 @@ before_build:
 
 build_script:
   - ps: 'Write-Host "Configuring:" -ForegroundColor Magenta'
-  - ps: cmake $env:APPVEYOR_BUILD_FOLDER
+  - ps: cmake -DBOOST_ROOT=C:\Libraries\boost_1_67_0 $env:APPVEYOR_BUILD_FOLDER
   - ps: 'Write-Host "Building:" -ForegroundColor Magenta'
   - cmake --build .
   - ctest -V --output-on-failure

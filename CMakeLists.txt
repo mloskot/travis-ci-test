@@ -1,6 +1,7 @@
-cmake_minimum_required (VERSION 3.0.0)
+cmake_minimum_required (VERSION 3.13.0)
 project(ci-test LANGUAGES CXX)
 enable_testing()
+list(INSERT CMAKE_MODULE_PATH 0 ${CMAKE_BINARY_DIR}/cmake)
 
 set(CMAKE_CXX_STANDARD 11 CACHE STRING "C++ standard version to use (default is 11)")
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -20,4 +21,8 @@ add_executable(test1 test1.cpp)
 add_test(NAME test1 COMMAND test1)
 
 add_executable(filesystem filesystem.cpp)
+if(Boost_FOUND)
+  target_link_libraries(filesystem PRIVATE Boost::filesystem)
+  target_compile_definitions(filesystem PRIVATE CI_TEST_HAS_BOOST_FILESYSTEM)
+endif()
 add_test(NAME test_filesystem COMMAND filesystem)

@@ -158,16 +158,20 @@ steps_build_and_test: &steps_build_and_test
     - *run_build_boost
     - run:
         name: Prepare build directory
-        command: pwd && ls && mkdir -p build
+        command: |
+          pwd && ls -l
+          cd project
+          pwd && ls -l
+          mkdir -p build
     - run:
         name: Run cmake
-        command: pwd && cd build && cmake -DBOOST_ROOT=~/project/boost ..
+        command: cd project/build && cmake -DBOOST_ROOT=~/project/boost ..
     - run:
         name: Run cmake --build
-        command: pwd && cd build && cmake --build .
+        command: cd project/build && cmake --build .
     - run:
         name: Run ctest
-        command: pwd && cd build && ctest -VV --output-on-failure
+        command: cd project/build && ctest -V --output-on-failure
 
 ##############################################################################
 # Build jobs

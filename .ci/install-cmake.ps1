@@ -24,8 +24,8 @@ if ($currentVersion -ne $null) {
 $zip = ('cmake-{0}-win64-x64.zip' -f $version);
 $out = ('{0}\{1}'-f $PSScriptRoot, $zip);
 if (-not (Test-Path -Path $out -PathType Leaf)) {
-  Write-Host ('Downloading CMake {0}' -f $version)
   $url = ('https://cmake.org/files/v{0}.{1}/{2}' -f $major, $minor, $zip);
+  Write-Host ('Downloading CMake from {0}' -f $url)
   [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
   (New-Object System.Net.WebClient).DownloadFile($url, $out)
 }
@@ -40,6 +40,7 @@ try {
 Remove-Item -Path $out -Force
 
 dir C:\
+dir C:\cmake-3.13.2-win64-x64
+
 $env:Path += ";C:\cmake-3.13.2-win64-x64\bin"
 cmake --version
-C:\cmake-3.13.2-win64-x64\bin --version

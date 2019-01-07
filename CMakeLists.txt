@@ -6,6 +6,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 message(STATUS "ci-test: Configuring C++${CMAKE_CXX_STANDARD}")
 
+set(Boost_DEBUG ON)
 find_package(Boost 1.65.0 COMPONENTS filesystem)
 
 add_executable(test1 test1.cpp)

@@ -133,15 +133,12 @@ run_build_boost: &run_build_boost
   run:
     name: Building Boost
     command: |
-      pwd
-      ls -l
-      cd project
-      pwd
-      ls -l
-      cd boost
+      pwd && ls -l && cd project
+      pwd && ls -l && cd boost
       ./bootstrap.sh -with-toolset=$TOOLSET || cat ./bootstrap.log
       ./b2 headers
       ./b2 toolset=$TOOLSET cxxstd=$CXXSTD --with-filesystem stage
+      ls -l stage/lib
 
 run_install_cmake: &run_install_cmake
   run:

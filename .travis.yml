@@ -9,11 +9,11 @@ ref:
     - ubuntu-toolchain-r-test
 
 before_install:
-  - which cmake
-  - cmake --version
-  - g++ --version
+  - ./.ci/install-cmake.sh $HOME/usr
 
 before_script:
+  - cmake --version
+  - g++ --version
   - mkdir -p ${TRAVIS_BUILD_DIR}/_build
 
 script:

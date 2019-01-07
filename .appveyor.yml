@@ -20,12 +20,10 @@ init:
       Get-ChildItem Env: | %{"{0}={1}" -f $_.Name,$_.Value}
 
 install:
-  - cmd: appveyor-retry appveyor DownloadFile https://cmake.org/files/v3.12/cmake-3.12.3-win64-x64.zip
+  - cmd: appveyor-retry appveyor DownloadFile https://cmake.org/files/v3.13/cmake-3.13.2-win64-x64.zip
   - cmd: 7z x cmake-3.12.3-win64-x64.zip -oC:\cmake > nul
   - cmd: set PATH=C:\cmake\bin;%PATH%
-  - sh: wget -O cmake-linux.sh https://cmake.org/files/v3.12/cmake-3.12.3-Linux-x86_64.sh
-  - sh: sudo sh cmake-linux.sh -- --skip-license --prefix=/usr/local
-  - sh: export PATH=/usr/local/bin:$PATH
+  - sh: sudo ./.ci/install-cmake.sh
   - cmake --version
 
 build: off

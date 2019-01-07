@@ -1,0 +1,4 @@
+steps:
+  - script: sudo .ci/install-cmake.sh
+    displayName: 'Install CMake'
+    condition: eq(variables['Agent.OS'], 'Linux')

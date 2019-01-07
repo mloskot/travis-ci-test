@@ -15,6 +15,8 @@ if [ "$prefix" = "/usr/local" ]; then
     rm -rf /usr/local/man/man1/ctest*
     rm -rf /usr/local/man/man7/cmake*
     rm -rf /usr/local/share/cmake*
+else
+    mkdir -p $prefix
 fi
 
 wget -O cmake-linux.sh https://cmake.org/files/v3.13/cmake-${version}-Linux-x86_64.sh

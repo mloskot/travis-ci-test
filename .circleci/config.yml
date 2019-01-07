@@ -165,13 +165,19 @@ steps_build_and_test: &steps_build_and_test
           mkdir -p build
     - run:
         name: Run cmake
-        command: cd project/build && cmake -DBOOST_ROOT=~/project/boost ..
+        command: |
+        cd project/build
+        cmake -DCMAKE_CXX_STANDARD=${CXXSTD} -DBOOST_ROOT=~/project/boost ..
     - run:
         name: Run cmake --build
-        command: cd project/build && cmake --build .
+        command: |
+          cd project/build
+          cmake --build .
     - run:
         name: Run ctest
-        command: cd project/build && ctest -V --output-on-failure
+        command: |
+          cd project/build
+          ctest -V --output-on-failure
 
 ##############################################################################
 # Build jobs

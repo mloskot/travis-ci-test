@@ -39,5 +39,7 @@ try {
 }
 Remove-Item -Path $out -Force
 
+dir C:\
 $env:Path += ";C:\cmake-3.13.2-win64-x64\bin"
 cmake --version
+C:\cmake-3.13.2-win64-x64\bin --version

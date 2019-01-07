@@ -166,8 +166,8 @@ steps_build_and_test: &steps_build_and_test
     - run:
         name: Run cmake
         command: |
-        cd project/build
-        cmake -DCMAKE_CXX_STANDARD=${CXXSTD} -DBOOST_ROOT=~/project/boost ..
+          cd project/build
+          cmake -DCMAKE_CXX_STANDARD=${CXXSTD} -DBOOST_ROOT=~/project/boost ..
     - run:
         name: Run cmake --build
         command: |

@@ -10,6 +10,7 @@ ref:
 
 before_install:
   - ./.ci/install-cmake.sh $HOME/usr
+  - export PATH=$HOME/usr/bin:$PATH
 
 before_script:
   - cmake --version

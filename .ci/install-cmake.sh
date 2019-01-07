@@ -21,4 +21,4 @@ fi
 
 wget -O cmake-linux.sh https://cmake.org/files/v3.13/cmake-${version}-Linux-x86_64.sh
 sh cmake-linux.sh -- --skip-license --prefix=$prefix
-cmake --version
+$prefix/bin/cmake --version

@@ -38,5 +38,5 @@ try {
   exit 1
 }
 Remove-Item -Path $out -Force
-
+dir c:\cmake
 C:\cmake\bin\cmake --version

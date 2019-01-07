@@ -8,19 +8,19 @@ jobs:
     steps:
       - script: which g++ && g++ --version
         displayName: 'Check GCC version'
-      - script: .ci/azure-pipelines/steps-install-cmake.yml
+      - template: .ci/azure-pipelines/steps-install-cmake.yml
       - template: .ci/azure-pipelines/steps-cmake.yml
 
   - job: 'win2016_vs2017_cmake312'
     pool:
       vmImage: 'vs2017-win2016'
     steps:
-      - script: .ci/azure-pipelines/steps-install-cmake.yml
+      - template: .ci/azure-pipelines/steps-install-cmake.yml
       - template: .ci/azure-pipelines/steps-cmake.yml
 
   - job: 'macos1013_xcode91_cmake313'
     pool:
       vmImage: 'macOS-10.13'
     steps:
-      - script: .ci/azure-pipelines/steps-install-cmake.yml
+      - template: .ci/azure-pipelines/steps-install-cmake.yml
       - template: .ci/azure-pipelines/steps-cmake.yml

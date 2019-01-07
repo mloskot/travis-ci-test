@@ -162,17 +162,17 @@ steps_build_and_test: &steps_build_and_test
         name: Run cmake
         command: |
           cd project/build
-          cmake -DCMAKE_CXX_STANDARD=${CXXSTD} -DCMAKE_VERBOSE_MAKEFILE=ON -DBOOST_ROOT=~/project/project/boost ..
+          $HOME/usr/bin/cmake -DCMAKE_CXX_STANDARD=${CXXSTD} -DCMAKE_VERBOSE_MAKEFILE=ON -DBOOST_ROOT=~/project/project/boost ..
     - run:
         name: Run cmake --build
         command: |
           cd project/build
-          cmake --build .
+          $HOME/usr/bin/cmake --build .
     - run:
         name: Run ctest
         command: |
           cd project/build
-          ctest -V --output-on-failure
+          $HOME/usr/bin/ctest -V --output-on-failure
 
 ##############################################################################
 # Build jobs

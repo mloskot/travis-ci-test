@@ -2,15 +2,15 @@
 
 #ifdef __cpp_lib_filesystem
     #include <filesystem>
-    using fs = std::filesystem;
+    namespace fs = std::filesystem;
 #elif __cpp_lib_experimental_filesystem
     #include <experimental/filesystem>
-    using fs = std::experimental::filesystem;
+    namespace fs = std::experimental::filesystem;
 #else
     #ifdef CI_TEST_HAS_BOOST_FILESYSTEM
         #define BOOST_FILESYSTEM_VERSION 3
         #include <boost/filesystem.hpp>
-        using fs = boost::filesystem;
+        namespace fs = boost::filesystem;
     #endif
 #endif
 

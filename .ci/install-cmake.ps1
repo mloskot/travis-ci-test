@@ -32,11 +32,12 @@ if (-not (Test-Path -Path $out -PathType Leaf)) {
 
 try {
   Write-Host ("Installing {0}" -f $out)
-  Expand-Archive $out -DestinationPath C:\cmake
+  Expand-Archive $out -DestinationPath C:\
 } catch {
   Write-Host $_.Exception.Message
   exit 1
 }
 Remove-Item -Path $out -Force
-dir c:\cmake
-C:\cmake\bin\cmake --version
+
+$env:Path += ";C:\cmake-3.13.2-win64-x64\bin"
+cmake --version

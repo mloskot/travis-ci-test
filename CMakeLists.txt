@@ -15,6 +15,7 @@ if(NOT EXISTS "${CMAKE_BINARY_DIR}/cmake/FindBoost.cmake")
     "${CMAKE_BINARY_DIR}/cmake/FindBoost.cmake")
 endif()
 set(Boost_DEBUG ON)
+set(Boost_USE_STATIC_LIBS ON)
 find_package(Boost 1.65.0 COMPONENTS filesystem)
 
 add_executable(test1 test1.cpp)

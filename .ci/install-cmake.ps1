@@ -33,11 +33,15 @@ if (-not (Test-Path -Path $out -PathType Leaf)) {
 }
 
 try {
-  Write-Host ("Installing {0} in C:\{1}" -f $out, $name)
+  Write-Host ("Installing {0} in C:\cmake" -f $out)
   Expand-Archive $out -DestinationPath C:\
+  Rename-Item -Path ('C:\{0}' -f $name) -NewName C:\cmake
 } catch {
   Write-Host $_.Exception.Message
   exit 1
 }
 Remove-Item -Path $out -Force
-C:\cmake-3.13.2-win64-x64\bin\cmake --version
+
+$env:Path = "C:\cmake\bin", $env:Path -join ";"
+[System.Environment]::SetEnvironmentVariable('Path', $env:Path, [System.EnvironmentVariableTarget]::Machine)
+cmake --version

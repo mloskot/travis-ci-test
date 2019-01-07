@@ -1,11 +1,18 @@
 cmake_minimum_required (VERSION 3.0.0)
 project(ci-test LANGUAGES CXX)
 enable_testing()
+
 set(CMAKE_CXX_STANDARD 11 CACHE STRING "C++ standard version to use (default is 11)")
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 message(STATUS "ci-test: Configuring C++${CMAKE_CXX_STANDARD}")
 
+if(NOT EXISTS "${CMAKE_BINARY_DIR}/cmake/FindBoost.cmake")
+  message(STATUS "ci-test: Downloading latest FindBoost.cmake from https://gitlab.kitware.com/cmake/")
+  file(DOWNLOAD
+    "https://gitlab.kitware.com/cmake/cmake/raw/release/Modules/FindBoost.cmake"
+    "${CMAKE_BINARY_DIR}/cmake/FindBoost.cmake")
+endif()
 set(Boost_DEBUG ON)
 find_package(Boost 1.65.0 COMPONENTS filesystem)
 

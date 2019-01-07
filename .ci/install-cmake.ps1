@@ -21,29 +21,22 @@ if ($currentVersion -ne $null) {
   }
 }
 
-$msi = ('cmake-{0}-win64-x64.msi' -f $version);
-$out = ('{0}\{1}'-f $PSScriptRoot, $msi);
+$zip = ('cmake-{0}-win64-x64.zip' -f $version);
+$out = ('{0}\{1}'-f $PSScriptRoot, $zip);
 if (-not (Test-Path -Path $out -PathType Leaf)) {
   Write-Host ('Downloading CMake {0}' -f $version)
-  $url = ('https://cmake.org/files/v{0}.{1}/{2}' -f $major, $minor, $msi);
+  $url = ('https://cmake.org/files/v{0}.{1}/{2}' -f $major, $minor, $zip);
   [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
   (New-Object System.Net.WebClient).DownloadFile($url, $out)
 }
 
-$options = @(
-  '/qn',
-  '/norestart',
-  'ADD_CMAKE_TO_PATH="System"'
-);
-$options = ($options.GetEnumerator() | % { ('{0}' -f $_) }) -join ' '
 try {
   Write-Host ("Installing {0}" -f $out)
-  $p = Start-Process -Wait -PassThru -FilePath $out -Args $options
-  Write-Host ("Installer exited with code {0}" -f $p.ExitCode)
+  Expand-Archive $out -DestinationPath C:\cmake
 } catch {
   Write-Host $_.Exception.Message
   exit 1
 }
 Remove-Item -Path $out -Force
 
-cmake --version
+C:\cmake\bin\cmake --version

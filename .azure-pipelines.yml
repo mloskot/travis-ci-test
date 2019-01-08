@@ -50,7 +50,7 @@ jobs:
       - template: .ci/azure-pipelines/steps-install-cmake.yml
       - template: .ci/azure-pipelines/steps-cmake.yml
         parameters:
-          cxxstd: 'latest'
+          cxxstd: '20'
           cmake: 'C:\cmake\bin\cmake'
           ctest: 'C:\cmake\bin\ctest'
 

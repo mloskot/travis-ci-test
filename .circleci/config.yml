@@ -99,6 +99,7 @@ env_gcc_cxx17: &env_gcc_cxx20
   environment:
     - CXX: g++
     - CXXSTD: "20"
+    - B2_CXXSTD: "2a"
     - TOOLSET: gcc
 
 ##############################################################################
@@ -136,6 +137,9 @@ run_compiler_version: &run_compiler_version
     command: |
       echo CXX=$CXX
       echo CXXSTD=$CXXSTD
+      if test -n "$B2_CXXSTD"; then
+        echo B2_CXXSTD=$B2_CXXSTD
+      fi
       echo TOOLSET=$TOOLSET
       $TOOLSET --version
 
@@ -147,7 +151,10 @@ run_build_boost: &run_build_boost
       pwd && ls -l && cd boost
       ./bootstrap.sh -with-toolset=$TOOLSET || cat ./bootstrap.log
       ./b2 headers
-      ./b2 toolset=$TOOLSET cxxstd=$CXXSTD --with-filesystem stage
+      if test -z "$B2_CXXSTD"; then
+        B2_CXXSTD=$CXXSTD
+      fi
+      ./b2 toolset=$TOOLSET cxxstd=$B2_CXXSTD --with-filesystem stage
       ls -l stage/lib
 
 run_install_cmake: &run_install_cmake

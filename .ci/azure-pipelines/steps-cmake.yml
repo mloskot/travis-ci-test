@@ -1,7 +1,12 @@
+# default, if not specified
+parameters:
+  cmake: 'cmake'
+  ctest: 'ctest'
+
 steps:
-  - script: cmake -H. -B_build
+  - script: ${{ parameters.cmake }} -H. -B_build -DCMAKE_BUILD_TYPE=Release
     displayName: 'Run CMake to configure build'
-  - script: cmake --build _build
+  - script: ${{ parameters.cmake }} --build _build --config Release
     displayName: 'Run CMake to build'
-  - script: cd _build && ctest -V
+  - script: cd _build && ${{ parameters.ctest }} -V --output-on-failure --build-config Release
     displayName: 'Run CTest to test'

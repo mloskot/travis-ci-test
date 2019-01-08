@@ -35,7 +35,7 @@ before_build:
 
 build_script:
   - ps: 'Write-Host "Configuring:" -ForegroundColor Magenta'
-  - ps: cmake -DBOOST_ROOT=C:\Libraries\boost_1_67_0 $env:APPVEYOR_BUILD_FOLDER
+  - ps: cmake -DCMAKE_BUILD_TYPE=Release -DBOOST_ROOT=C:\Libraries\boost_1_67_0 $env:APPVEYOR_BUILD_FOLDER
   - ps: 'Write-Host "Building:" -ForegroundColor Magenta'
-  - cmake --build .
-  - ctest -V --output-on-failure
+  - cmake --build . --config Release
+  - ctest -V --output-on-failure --build-config Release

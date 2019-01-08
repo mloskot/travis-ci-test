@@ -1,5 +1,9 @@
 // Detect <filesystem> availability
 
+#if defined(__cplusplus) && (__cplusplus >= 201703L)
+    #include <version>
+#endif
+
 #ifdef __cpp_lib_filesystem
     #include <filesystem>
     namespace fs = std::filesystem;

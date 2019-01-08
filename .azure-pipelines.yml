@@ -22,37 +22,37 @@ jobs:
           ctest: 'C:\cmake\bin\ctest'
 
   - job: 'vs2017_cxx14'
-      pool:
-        vmImage: 'vs2017-win2016'
-      steps:
-        - template: .ci/azure-pipelines/steps-install-cmake.yml
-        - template: .ci/azure-pipelines/steps-cmake.yml
-          parameters:
-            cxxstd: '14'
-            cmake: 'C:\cmake\bin\cmake'
-            ctest: 'C:\cmake\bin\ctest'
+    pool:
+      vmImage: 'vs2017-win2016'
+    steps:
+      - template: .ci/azure-pipelines/steps-install-cmake.yml
+      - template: .ci/azure-pipelines/steps-cmake.yml
+        parameters:
+          cxxstd: '14'
+          cmake: 'C:\cmake\bin\cmake'
+          ctest: 'C:\cmake\bin\ctest'
 
   - job: 'vs2017_cxx17'
-      pool:
-        vmImage: 'vs2017-win2016'
-      steps:
-        - template: .ci/azure-pipelines/steps-install-cmake.yml
-        - template: .ci/azure-pipelines/steps-cmake.yml
-          parameters:
-            cxxstd: '14'
-            cmake: 'C:\cmake\bin\cmake'
-            ctest: 'C:\cmake\bin\ctest'
+    pool:
+      vmImage: 'vs2017-win2016'
+    steps:
+      - template: .ci/azure-pipelines/steps-install-cmake.yml
+      - template: .ci/azure-pipelines/steps-cmake.yml
+        parameters:
+          cxxstd: '14'
+          cmake: 'C:\cmake\bin\cmake'
+          ctest: 'C:\cmake\bin\ctest'
 
   - job: 'vs2017_cxxlatest'
-      pool:
-        vmImage: 'vs2017-win2016'
-      steps:
-        - template: .ci/azure-pipelines/steps-install-cmake.yml
-        - template: .ci/azure-pipelines/steps-cmake.yml
-          parameters:
-            cxxstd: 'latest'
-            cmake: 'C:\cmake\bin\cmake'
-            ctest: 'C:\cmake\bin\ctest'
+    pool:
+      vmImage: 'vs2017-win2016'
+    steps:
+      - template: .ci/azure-pipelines/steps-install-cmake.yml
+      - template: .ci/azure-pipelines/steps-cmake.yml
+        parameters:
+          cxxstd: 'latest'
+          cmake: 'C:\cmake\bin\cmake'
+          ctest: 'C:\cmake\bin\ctest'
 
   - job: 'macos1013_xcode91_cmake313'
     pool:

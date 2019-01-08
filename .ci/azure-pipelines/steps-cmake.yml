@@ -1,12 +1,13 @@
 # default, if not specified
 parameters:
+  cxxstd: '11'
   cmake: 'cmake'
   ctest: 'ctest'
 
 steps:
-  - script: ${{ parameters.cmake }} -H. -B_build -DCMAKE_BUILD_TYPE=Release
-    displayName: 'Run CMake to configure build'
+  - script: ${{ parameters.cmake }} -H. -B_build -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_STANDARD=${{ parameters.cxxstd }}
+    displayName: 'Run cmake'
   - script: ${{ parameters.cmake }} --build _build --config Release
-    displayName: 'Run CMake to build'
+    displayName: 'Run cmake --build'
   - script: cd _build && ${{ parameters.ctest }} -V --output-on-failure --build-config Release
-    displayName: 'Run CTest to test'
+    displayName: 'Run ctest'

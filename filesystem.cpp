@@ -1,6 +1,6 @@
 // Detect <filesystem> availability
 
-#if defined(__cplusplus) && (__cplusplus >= 201703L)
+#if defined(__cplusplus) && (__cplusplus > 201703L)
     #include <version>
 #endif
 

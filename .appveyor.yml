@@ -36,8 +36,6 @@ build: off
 
 before_build:
   - ps: 'Write-Host "Building ci-test:" -ForegroundColor Magenta'
-  - mkdir _build
-  - cd _build
 
 build_script:
   - cmd: cmake -H. -B_build -DCMAKE_BUILD_TYPE=Release -DBOOST_ROOT=C:\Libraries\boost_1_67_0 -DCMAKE_CXX_STANDARD=%CXXSTD%

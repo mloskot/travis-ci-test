@@ -2,6 +2,7 @@
 #Requires -RunAsAdministrator
 
 $version = '3.13.2'
+$prefix = 'C:\cmake'
 
 $major, $minor, $patch = $version.split('.');
 try {
@@ -33,15 +34,17 @@ if (-not (Test-Path -Path $out -PathType Leaf)) {
 }
 
 try {
-  Write-Host ("Installing {0} in C:\cmake" -f $out)
+  Write-Host ("Installing {0} in {1}" -f $out, $prefix)
   Expand-Archive $out -DestinationPath C:\
-  Rename-Item -Path ('C:\{0}' -f $name) -NewName C:\cmake
+  Rename-Item -Path ('C:\{0}' -f $name) -NewName $prefix
 } catch {
   Write-Host $_.Exception.Message
   exit 1
 }
 Remove-Item -Path $out -Force
 
-$env:Path = "C:\cmake\bin", $env:Path -join ";"
+$env:Path = ('{0}\bin' -f $prefix), $env:Path -join ";"
 [System.Environment]::SetEnvironmentVariable('Path', $env:Path, [System.EnvironmentVariableTarget]::Machine)
+
+Get-Command cmake
 cmake --version

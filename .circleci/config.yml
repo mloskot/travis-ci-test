@@ -95,6 +95,12 @@ env_gcc_cxx17: &env_gcc_cxx17
     - CXXSTD: "17"
     - TOOLSET: gcc
 
+env_gcc_cxx17: &env_gcc_cxx20
+  environment:
+    - CXX: g++
+    - CXXSTD: "20"
+    - TOOLSET: gcc
+
 ##############################################################################
 # Build configurations
 ##############################################################################
@@ -109,6 +115,10 @@ config_gcc82_cxx14: &config_gcc82_cxx14
 config_gcc82_cxx17: &config_gcc82_cxx17
   <<: *docker_gcc82
   <<: *env_gcc_cxx17
+
+config_gcc82_cxx20: &config_gcc82_cxx20
+  <<: *docker_gcc82
+  <<: *env_gcc_cxx20
 
 ##############################################################################
 # Workspace persistance
@@ -211,6 +221,10 @@ jobs:
     <<: *config_gcc82_cxx17
     <<: *steps_build_and_test
 
+  gcc82_cxx20:
+    <<: *config_gcc82_cxx20
+    <<: *steps_build_and_test
+
 ##############################################################################
 # Workflows
 ##############################################################################
@@ -228,6 +242,10 @@ workflows:
       - gcc82_cxx17:
           requires:
             - bootstrap_checkout
+      - gcc82_cxx20:
+          requires:
+            - bootstrap_checkout
+
 # notify:
 #   webhooks:
 #     - url: https://webhooks.gitter.im/e/9538066016dc0f9b6511

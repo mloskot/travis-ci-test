@@ -8,6 +8,11 @@ platform:
   - x86
   #- x64
 
+environment:
+  matrix:
+    - CXXSTD: 11
+    - CXXSTD: 14
+
 shallow_clone: true
 clone_depth: 1
 
@@ -25,6 +30,7 @@ install:
         ./.ci/install-cmake.ps1
       }
   - sh: sudo sh ./.ci/install-cmake.sh
+  - sh: sudo apt-get update && sudo apt-get install -y libboost-filesystem-dev
 
 build: off
 
@@ -34,8 +40,8 @@ before_build:
   - cd _build
 
 build_script:
-  - ps: 'Write-Host "Configuring:" -ForegroundColor Magenta'
-  - ps: cmake -DCMAKE_BUILD_TYPE=Release -DBOOST_ROOT=C:\Libraries\boost_1_67_0 $env:APPVEYOR_BUILD_FOLDER
-  - ps: 'Write-Host "Building:" -ForegroundColor Magenta'
-  - cmake --build . --config Release
+  - cmd: cmake -H. -B_build -DCMAKE_BUILD_TYPE=Release -DBOOST_ROOT=C:\Libraries\boost_1_67_0 -DCMAKE_CXX_STANDARD=%CXXSTD%
+  - sh: cmake -H. -B_build -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_STANDARD=$CXXSTD
+  - cmake --build _build --config Release
+  - cd _build
   - ctest -V --output-on-failure --build-config Release

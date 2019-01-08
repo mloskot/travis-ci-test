@@ -2,7 +2,7 @@ trigger:
   - master
 
 jobs:
-  - job: Linux
+  - job: gcc54_cxx11
     pool:
       vmImage: 'ubuntu-16.04'
     steps:
@@ -10,6 +10,17 @@ jobs:
         displayName: 'Check GCC version'
       - template: .ci/azure-pipelines/steps-install-cmake.yml
       - template: .ci/azure-pipelines/steps-cmake.yml
+
+  - job: gcc54_cxx14
+    pool:
+      vmImage: 'ubuntu-16.04'
+    steps:
+      - script: which g++ && g++ --version
+        displayName: 'Check GCC version'
+      - template: .ci/azure-pipelines/steps-install-cmake.yml
+      - template: .ci/azure-pipelines/steps-cmake.yml
+        parameters:
+          cxxstd: '14'
 
   - job: 'vs2017_cxx11'
     pool:
@@ -54,9 +65,27 @@ jobs:
           cmake: 'C:\cmake\bin\cmake'
           ctest: 'C:\cmake\bin\ctest'
 
-  - job: 'macos1013_xcode91_cmake313'
+  - job: 'xcode91_cxx11'
     pool:
       vmImage: 'macOS-10.13'
     steps:
       - template: .ci/azure-pipelines/steps-install-cmake.yml
       - template: .ci/azure-pipelines/steps-cmake.yml
+
+  - job: 'xcode91_cxx14'
+    pool:
+      vmImage: 'macOS-10.13'
+    steps:
+      - template: .ci/azure-pipelines/steps-install-cmake.yml
+      - template: .ci/azure-pipelines/steps-cmake.yml
+        parameters:
+          cxxstd: '14'
+
+  - job: 'xcode91_cxx17'
+    pool:
+      vmImage: 'macOS-10.13'
+    steps:
+      - template: .ci/azure-pipelines/steps-install-cmake.yml
+      - template: .ci/azure-pipelines/steps-cmake.yml
+        parameters:
+          cxxstd: '17'

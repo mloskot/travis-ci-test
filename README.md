@@ -1,7 +1,7 @@
 # ci-test
 
-A playground with examples using variety of CI services
-with a sample C++ project and CMake.
+A playground to test variety of public CI services with
+a sample C++ project and CMake.
 
 ## Build Status
 

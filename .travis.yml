@@ -6,3 +6,7 @@ language: cpp
 
 script:
   - cmake --version
+  - g++ --version
+  - make --version
+  - cl --version
+  - nmake --version

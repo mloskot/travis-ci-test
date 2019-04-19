@@ -1,7 +1,7 @@
 #!/usr/bin/env powershell
 #Requires -RunAsAdministrator
 
-$version = '3.13.2'
+$version = '3.14.2'
 $prefix = 'C:\cmake'
 
 $major, $minor, $patch = $version.split('.');

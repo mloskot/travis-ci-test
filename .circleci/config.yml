@@ -263,7 +263,11 @@ workflows:
 
       ### GCC 4.x ############################################################
       - gcc48_cxx11
+          requires:
+            - bootstrap_checkout
       - gcc49_cxx11
+          requires:
+            - bootstrap_checkout
 
       # - gcc82_cxx11:
       #     requires:

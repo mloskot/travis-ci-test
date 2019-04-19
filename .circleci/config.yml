@@ -105,6 +105,14 @@ env_gcc_cxx17: &env_gcc_cxx20
 ##############################################################################
 # Build configurations
 ##############################################################################
+config_gcc48_cxx11: &config_gcc48_cxx11
+  <<: *docker_gcc48
+  <<: *env_gcc_cxx11
+
+config_gcc49_cxx11: &config_gcc49_cxx11
+  <<: *docker_gcc49
+  <<: *env_gcc_cxx11
+
 config_gcc82_cxx11: &config_gcc82_cxx11
   <<: *docker_gcc82
   <<: *env_gcc_cxx11
@@ -216,6 +224,18 @@ jobs:
           paths:
             - project
 
+  gcc48_cxx11:
+    <<: *config_gcc48_cxx11
+    <<: *steps_build_and_test
+
+  gcc49_cxx11:
+    <<: *config_gcc49_cxx11
+    <<: *steps_build_and_test
+
+  gcc82_cxx11:
+    <<: *config_gcc82_cxx11
+    <<: *steps_build_and_test
+
   gcc82_cxx11:
     <<: *config_gcc82_cxx11
     <<: *steps_build_and_test
@@ -240,18 +260,23 @@ workflows:
   build-and-test:
     jobs:
       - bootstrap_checkout
-      - gcc82_cxx11:
-          requires:
-            - bootstrap_checkout
-      - gcc82_cxx14:
-          requires:
-            - bootstrap_checkout
-      - gcc82_cxx17:
-          requires:
-            - bootstrap_checkout
-      - gcc82_cxx20:
-          requires:
-            - bootstrap_checkout
+
+      ### GCC 4.x ############################################################
+      - gcc48_cxx11
+      - gcc49_cxx11
+
+      # - gcc82_cxx11:
+      #     requires:
+      #       - bootstrap_checkout
+      # - gcc82_cxx14:
+      #     requires:
+      #       - bootstrap_checkout
+      # - gcc82_cxx17:
+      #     requires:
+      #       - bootstrap_checkout
+      # - gcc82_cxx20:
+      #     requires:
+      #       - bootstrap_checkout
 
 # notify:
 #   webhooks:

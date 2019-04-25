@@ -22,7 +22,6 @@ if ($currentVersion -ne $null) {
   }
 }
 
-
 $name = ('cmake-{0}-win64-x64' -f $version);
 $zip = ('{0}.zip' -f $name);
 $out = ('{0}\{1}'-f $PSScriptRoot, $zip);

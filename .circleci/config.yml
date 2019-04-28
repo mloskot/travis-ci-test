@@ -78,44 +78,48 @@ docker_clang50: &docker_clang50
 # Build variants
 ##############################################################################
 env_gcc_cxx11: &env_gcc_cxx11
-  environment:
-    - CXX: g++
-    - CXXSTD: "11"
-    - TOOLSET: gcc
+  CXX: g++
+  CXXSTD: "11"
+
+env_gcc_cxx11_2: &env_gcc_cxx11_2
+  TOOLSET: gcc
 
 env_gcc_cxx14: &env_gcc_cxx14
   environment:
-    - CXX: g++
-    - CXXSTD: "14"
-    - TOOLSET: gcc
+    CXX: g++
+    CXXSTD: "14"
+    TOOLSET: gcc
 
 env_gcc_cxx17: &env_gcc_cxx17
   environment:
-    - CXX: g++
-    - CXXSTD: "17"
-    - TOOLSET: gcc
+    CXX: g++
+    CXXSTD: "17"
+    TOOLSET: gcc
 
 env_gcc_cxx17: &env_gcc_cxx20
   environment:
-    - CXX: g++
-    - CXXSTD: "20"
-    - B2_CXXSTD: "2a"
-    - TOOLSET: gcc
+    CXX: g++
+    CXXSTD: "20"
+    B2_CXXSTD: "2a"
+    TOOLSET: gcc
 
 ##############################################################################
 # Build configurations
 ##############################################################################
 config_gcc48_cxx11: &config_gcc48_cxx11
   <<: *docker_gcc48
-  <<: *env_gcc_cxx11
+  environment:
+    <<: [*env_gcc_cxx11, *env_gcc_cxx11_2]
 
 config_gcc49_cxx11: &config_gcc49_cxx11
   <<: *docker_gcc49
-  <<: *env_gcc_cxx11
+  environment:
+    <<: [*env_gcc_cxx11, *env_gcc_cxx11_2]
 
 config_gcc82_cxx11: &config_gcc82_cxx11
   <<: *docker_gcc82
-  <<: *env_gcc_cxx11
+  environment:
+    <<: [*env_gcc_cxx11, *env_gcc_cxx11_2]
 
 config_gcc82_cxx14: &config_gcc82_cxx14
   <<: *docker_gcc82

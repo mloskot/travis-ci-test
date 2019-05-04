@@ -53,3 +53,24 @@ stages:
         ls $BOOST_ROOT1
         ls $BOOST_ROOT2
       displayName: 'Build'
+  - job: 'Windows'
+    pool:
+      vmImage: 'vs2017-win2016'
+    strategy:
+      matrix:
+        VS 2017 C++17:
+          TOOLSET: msvc-14.1
+    steps:
+    - script: |
+        set SELF=%BUILD_REPOSITORY_NAME:-=_%
+        for /f "tokens=2 delims=/" %%a in ("%SELF%") do set SELF=%%a
+        set BOOST_ROOT=%BUILD_SOURCESDIRECTORY%\boost-root
+
+        echo ##vso[task.setvariable variable=SELF]%SELF%
+        echo ##vso[task.setvariable variable=BOOST_ROOT]%BOOST_ROOT%
+      displayName: 'Install'
+    - script: |
+        echo "step build - overriden: SELF=%SELF%"
+        echo "step build - overriden: BOOST_ROOT=%BOOST_ROOT%"
+        set
+      displayName: 'Build'

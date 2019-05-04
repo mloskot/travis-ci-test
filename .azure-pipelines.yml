@@ -1,91 +1,55 @@
-# trigger:
-#   - master
+trigger:
+  branches:
+    include:
+    - develop
+    - master
+    - bugfix/*
+    - feature/*
+    - fix/*
+    - ml/*
+    - pr/*
 
-jobs:
-  - job: gcc54_cxx11
+stages:
+- stage: Test
+  jobs:
+  - job: 'Linux'
     pool:
       vmImage: 'ubuntu-16.04'
+    strategy:
+      matrix:
+        GCC 5:
+          TOOLSET: gcc-5
     steps:
-      - script: which g++ && g++ --version
-        displayName: 'Check GCC version'
-      - template: .ci/azure-pipelines/steps-install-cmake.yml
-      - template: .ci/azure-pipelines/steps-cmake.yml
-
-  - job: gcc54_cxx14
-    pool:
-      vmImage: 'ubuntu-16.04'
-    steps:
-      - script: which g++ && g++ --version
-        displayName: 'Check GCC version'
-      - template: .ci/azure-pipelines/steps-install-cmake.yml
-      - template: .ci/azure-pipelines/steps-cmake.yml
-        parameters:
-          cxxstd: '14'
-
-  - job: 'vs2017_cxx11'
-    pool:
-      vmImage: 'vs2017-win2016'
-    steps:
-      - template: .ci/azure-pipelines/steps-install-cmake.yml
-      - template: .ci/azure-pipelines/steps-cmake.yml
-        parameters:
-          cmake: 'C:\cmake\bin\cmake'
-          ctest: 'C:\cmake\bin\ctest'
-
-  - job: 'vs2017_cxx14'
-    pool:
-      vmImage: 'vs2017-win2016'
-    steps:
-      - template: .ci/azure-pipelines/steps-install-cmake.yml
-      - template: .ci/azure-pipelines/steps-cmake.yml
-        parameters:
-          cxxstd: '14'
-          cmake: 'C:\cmake\bin\cmake'
-          ctest: 'C:\cmake\bin\ctest'
-
-  - job: 'vs2017_cxx17'
-    pool:
-      vmImage: 'vs2017-win2016'
-    steps:
-      - template: .ci/azure-pipelines/steps-install-cmake.yml
-      - template: .ci/azure-pipelines/steps-cmake.yml
-        parameters:
-          cxxstd: '14'
-          cmake: 'C:\cmake\bin\cmake'
-          ctest: 'C:\cmake\bin\ctest'
-
-  - job: 'vs2017_cxxlatest'
-    pool:
-      vmImage: 'vs2017-win2016'
-    steps:
-      - template: .ci/azure-pipelines/steps-install-cmake.yml
-      - template: .ci/azure-pipelines/steps-cmake.yml
-        parameters:
-          cxxstd: '20'
-          cmake: 'C:\cmake\bin\cmake'
-          ctest: 'C:\cmake\bin\ctest'
-
-  - job: 'xcode91_cxx11'
-    pool:
-      vmImage: 'macOS-10.13'
-    steps:
-      - template: .ci/azure-pipelines/steps-install-cmake.yml
-      - template: .ci/azure-pipelines/steps-cmake.yml
-
-  - job: 'xcode91_cxx14'
-    pool:
-      vmImage: 'macOS-10.13'
-    steps:
-      - template: .ci/azure-pipelines/steps-install-cmake.yml
-      - template: .ci/azure-pipelines/steps-cmake.yml
-        parameters:
-          cxxstd: '14'
-
-  - job: 'xcode91_cxx17'
-    pool:
-      vmImage: 'macOS-10.13'
-    steps:
-      - template: .ci/azure-pipelines/steps-install-cmake.yml
-      - template: .ci/azure-pipelines/steps-cmake.yml
-        parameters:
-          cxxstd: '17'
+    - bash: |
+        set -e
+        source install.sh
+        echo "step install - original SELF       before task.setvariable: SELF=$SELF"
+        echo "step install - original BOOST_ROOT before task.setvariable: BOOST_ROOT=$BOOST_ROOT"
+        # AzP predefines BOOST_ROOT, so we need this gymnastics to override it with ours.
+        # AzP requires to run special task in order to export
+        # BOOST_ROOT and others as job-scoped variable from a script.
+        #
+        echo "SELF=$SELF"
+        echo "BOOST_ROOT=$BOOST_ROOT"
+        # Comment
+        echo "##vso[task.setvariable variable=SELF]$SELF"
+        echo "##vso[task.setvariable variable=BOOST_ROOT]$BOOST_ROOT"
+        # Comment
+        echo "##vso[task.setvariable variable=SELF1]$SELF"
+        echo "##vso[task.setvariable variable=BOOST_ROOT1]$BOOST_ROOT"
+        #
+        echo "##vso[task.setvariable variable=SELF2]"$SELF
+        echo "##vso[task.setvariable variable=BOOST_ROOT2]"$BOOST_ROOT
+      displayName: 'Install'
+    - bash: |
+        set -e
+        echo "step build - overriden: SELF=$SELF"
+        echo "step build - overriden: BOOST_ROOT=$BOOST_ROOT"
+        echo "step build - variant 1: SELF1=$SELF1"
+        echo "step build - variant 1: BOOST_ROOT1=$BOOST_ROOT1"
+        echo "step build - variant 2: SELF2=$SELF2"
+        echo "step build - variant 2: BOOST_ROOT2=$BOOST_ROOT2"
+        ls $BOOST_ROOT
+        ls $BOOST_ROOT1
+        ls $BOOST_ROOT2
+      displayName: 'Build'

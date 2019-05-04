@@ -1,7 +1,0 @@
-steps:
-  - script: sudo sh .ci/install-cmake.sh
-    displayName: 'Install CMake'
-    condition: eq(variables['Agent.OS'], 'Linux')
-  - powershell: ./.ci/install-cmake.ps1
-    displayName: 'Install CMake'
-    condition: eq(variables['Agent.OS'], 'Windows_NT')

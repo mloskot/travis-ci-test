@@ -34,6 +34,7 @@ jobs:
       vmImage: 'windows-2019'
     steps:
     - script: |
+        set
         cmake -H. -B_build -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_STANDARD=11
 
   - job: 'vs2017_cxx11'

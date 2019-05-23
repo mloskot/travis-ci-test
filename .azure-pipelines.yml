@@ -29,6 +29,13 @@ jobs:
           cmake: 'C:\cmake\bin\cmake'
           ctest: 'C:\cmake\bin\ctest'
 
+  - job: 'mingw_cxx11'
+    pool:
+      vmImage: 'windows-2019'
+    steps:
+    - script: |
+        cmake -H. -B_build -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_STANDARD=11
+
   - job: 'vs2017_cxx11'
     pool:
       vmImage: 'vs2017-win2016'

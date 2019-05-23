@@ -34,7 +34,11 @@ jobs:
       vmImage: 'windows-2019'
     steps:
     - script: |
+        dir C:\tools\
+        dir C:\tools\mingw64
+        dir C:\tools\mingw64\bin
         set PATH=C:\tools\mingw64\bin;%PATH%
+        set
         cmake -H. -B_build -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_STANDARD=11
 
   - job: 'vs2017_cxx11'

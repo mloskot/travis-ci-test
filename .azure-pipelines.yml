@@ -19,6 +19,16 @@ jobs:
         parameters:
           cxxstd: '14'
 
+  - job: 'vs2019_cxx11'
+    pool:
+      vmImage: 'windows-2019'
+    steps:
+      - template: .ci/azure-pipelines/steps-install-cmake.yml
+      - template: .ci/azure-pipelines/steps-cmake.yml
+        parameters:
+          cmake: 'C:\cmake\bin\cmake'
+          ctest: 'C:\cmake\bin\ctest'
+
   - job: 'vs2017_cxx11'
     pool:
       vmImage: 'vs2017-win2016'

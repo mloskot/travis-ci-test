@@ -1,6 +1,6 @@
 #!/bin/sh
 set -x
-version='3.14.3'
+version='3.14.4'
 
 prefix=/usr/local
 if [ "$1" != "" ]; then

@@ -9,10 +9,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      # This step uses the hello-world-action stored in this workflow's repository.
-      - uses: ./hello-world-action
-        with:
-          who-to-greet: Octocat
-        id: hello
-      # This step prints the time.
-      - run: echo The time was ${{ steps.hello.outputs.time }}
+      - name: Print a greeting
+        env:
+          MY_VAR: My name is
+          FIRST_NAME: CI
+          LAST_NAME: Test
+        run: |
+          echo $MY_VAR $FIRST_NAME $LAST_NAME.

@@ -11,7 +11,7 @@ try {
 } catch {
   $currentVersion = $null;
 }
-if ($currentVersion -ne $null) {
+if ($null -ne $currentVersion) {
   $currentMajor, $currentMinor, $currentPatch = $currentVersion.split('.');
   $currentPatch = $currentPatch.split('-')[0] # 0-rcX to 0
   $patch = $patch.split('-')[0]
@@ -21,7 +21,6 @@ if ($currentVersion -ne $null) {
         exit 0;
   }
 }
-
 
 $name = ('cmake-{0}-win64-x64' -f $version);
 $zip = ('{0}.zip' -f $name);
